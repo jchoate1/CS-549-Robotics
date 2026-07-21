@@ -34,3 +34,4 @@ devel/
 
 # Solutions (instructor only - keep in separate branch)
 # labs/**/solution*.py
+slides
