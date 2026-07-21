@@ -13,14 +13,13 @@ This course combines theoretical foundations with practical implementation using
 ```
 CS-549-Robotics/
 ├── alvik/                    # Arduino Alvik robot code
-│   ├── examples/             # Working examples to learn from
-│   └── lib/                  # Utility libraries
+│   └── examples/             # Working examples to learn from
 ├── labs/                     # Lab assignments
-│   ├── lab1_path_planning/   # A* and configuration space
-│   ├── lab2_drive_square/    # Motor control and odometry
-│   ├── lab3_sensors/         # Range sensor interfacing
-│   ├── lab4_wall_follow/     # Wall-following behavior
-│   └── lab5_maze_challenge/  # Final maze navigation
+│   ├── Lab1/                 # A* path planning (Python)
+│   ├── Lab2/                 # Motor control and odometry (Alvik)
+│   ├── Lab3/                 # Range sensor interfacing (Alvik)
+│   ├── Lab4/                 # Wall-following behavior (Alvik)
+│   └── Lab5/                 # Final maze navigation (Alvik)
 ├── ros2_simulation/          # Gazebo maze worlds and Nav2 config
 └── docs/                     # Additional documentation
 ```
