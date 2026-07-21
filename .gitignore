@@ -34,4 +34,7 @@ devel/
 
 # Solutions (instructor only - keep in separate branch)
 # labs/**/solution*.py
-slides
+
+# PowerPoint exports (keep locally, not in repo)
+slides/*.pptx
+slides/*.pdf
