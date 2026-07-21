@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# MicroPython
+*.mpy
+
+# ROS2 build artifacts
+build/
+install/
+log/
+devel/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Solutions (instructor only - keep in separate branch)
+# labs/**/solution*.py
