@@ -33,7 +33,8 @@ devel/
 .ipynb_checkpoints/
 
 # Solutions (instructor only - keep in separate branch)
-# labs/**/solution*.py
+*_solution.py
+instructor/
 
 # PowerPoint exports (keep locally, not in repo)
 slides/*.pptx
