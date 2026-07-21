@@ -61,7 +61,24 @@ The University of Michigan Benchmark is a standard test for measuring dead recko
 
 ### Analysis
 
-Compare CW vs CCW results. Systematic errors (e.g., one wheel slightly larger) will cause consistent drift in one direction, while random errors will show variance.
+Compare CW vs CCW results:
+
+| What You Observe | What It Means | Possible Fix |
+|------------------|---------------|--------------|
+| CW and CCW drift in **same direction** | Systematic error (e.g., wheel diameter mismatch) | Calibrate wheel ratio |
+| CW and CCW drift in **opposite directions** | Random error (slip, surface) | Need external sensors |
+| Consistent rotation error | Wheelbase measurement wrong | Calibrate wheelbase |
+| Error grows with distance | Normal odometry drift | Use landmarks/sensors |
+| Large variance between runs | Surface or grip problems | Use better surface |
+
+**Key insight**: Systematic errors can be calibrated out. Random errors require sensor feedback to correct.
+
+### Questions to Answer in Your Analysis
+
+1. What was your average position error? How does it compare to the distance traveled?
+2. Did CW and CCW drift in the same or opposite directions? What does this tell you?
+3. Was heading (angle) error larger or smaller than position error?
+4. Based on your results, when would you need to add sensor feedback?
 
 ## Deliverables
 
