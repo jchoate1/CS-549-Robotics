@@ -111,7 +111,7 @@ NOTES:
 
 # Our Robot: Arduino Alvik
 
-![bg right:40% 90%](https://docs.arduino.cc/static/c8e7a8b8e8b8e8b8e8b8e8b8e8b8e8b8/alvik.png)
+<!-- ![bg right:40% 90%](https://docs.arduino.cc/static/c8e7a8b8e8b8e8b8e8b8e8b8e8b8e8b8/alvik.png) -->
 ![bg right:50%](images/arduino-alvik.webp)
 
 - **Brain**: Arduino Nano ESP32
