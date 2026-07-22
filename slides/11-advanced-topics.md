@@ -79,39 +79,71 @@ NOTES:
 
 ---
 
-# Machine Learning in Robotics
+# Odometry vs. Localization
 
-Modern robotics increasingly uses ML:
+We've been using **odometry** (dead reckoning):
+- Integrate wheel encoders over time
+- Simple, always available
+- **Problem**: Drift accumulates forever
 
-- **Deep Learning for Perception**: Object detection, segmentation
-- **Reinforcement Learning**: Learning to navigate
-- **Imitation Learning**: Learning from demonstrations
-- **Neural Motion Planning**: End-to-end planning
+**Localization** uses external references:
+- Landmarks, beacons, GPS
+- Maps and matching
+- **Advantage**: Bounded error
+
+*Odometry tells you where you THINK you are.*
+*Localization tells you where you ACTUALLY are.*
 
 <!-- 
 NOTES:
-- Hot area right now
-- Traditional + ML is common
-- Still need fundamentals
+- This is a fundamental distinction
+- Odometry is short-term; localization is long-term
+- SLAM combines both: build map while localizing
 -->
 
 ---
 
-# Computer Vision
+# Vision for Robotics: Edge Impulse Demo
 
-Vision is rich but complex:
+**Edge Impulse** makes ML on microcontrollers accessible:
 
-- **Object detection**: YOLO, Faster R-CNN
-- **Semantic segmentation**: Pixel-wise classification
-- **Visual odometry**: Motion from images
-- **Depth estimation**: Monocular depth
-- **3D reconstruction**: Structure from motion
+1. Collect images (e.g., "obstacle" vs "clear path")
+2. Train a neural network in browser
+3. Deploy to embedded device
+4. Robot classifies what it sees in real-time
+
+```
+Camera → NN inference → "obstacle detected" → React
+```
+
+**Try it**: edgeimpulse.com (free account)
+
+<!-- 
+NOTES:
+- This is what the original course included
+- Show the website, maybe a quick video
+- Position as "exposure" not "mastery"
+-->
+
+---
+
+# Vision: What's Possible
+
+Modern vision enables:
+
+- **Object detection**: YOLO sees "chair at (x,y)"
+- **Semantic segmentation**: Pixel-wise "this is floor"
+- **Visual odometry**: Motion from camera frames
+- **Depth estimation**: Single camera → 3D
+- **Person following**: Track and follow humans
+
+For Alvik: Could add a camera module for projects!
 
 <!-- 
 NOTES:
 - Cameras are cheap and information-rich
 - Processing is the challenge
-- GPU acceleration helps
+- GPU acceleration helps, but Edge Impulse works on MCUs
 -->
 
 ---
@@ -192,6 +224,63 @@ NOTES:
 
 ---
 
+# Safety & Failure Modes
+
+Real robots can fail in dangerous ways. Common pitfalls:
+
+| Failure | Cause | Prevention |
+|---------|-------|------------|
+| **Runaway loop** | No exit condition | Always check sensors |
+| **Bad sensor read** | Noise, disconnection | Validate readings |
+| **Motor saturation** | Asking for impossible speed | Clamp commands |
+| **Timing drift** | Blocking operations | Use non-blocking code |
+| **Battery death** | Forgot to monitor | Check voltage |
+
+**Rule**: Never trust a single sensor reading.
+
+<!-- 
+NOTES:
+- These are REAL bugs students will encounter
+- Professional robots have safety systems
+- Even our simple maze robot should check for stuck conditions
+-->
+
+---
+
+# Defensive Coding for Robots
+
+```python
+# BAD: Drives forever if sensor fails
+while True:
+    if distance > 20:
+        drive_forward()
+
+# GOOD: Has timeout and sanity checks
+start_time = time.time()
+while time.time() - start_time < 60:  # 60 second max
+    distance = alvik.get_distance()
+    
+    # Sanity check sensor
+    if distance[2] < 0 or distance[2] > 200:
+        alvik.stop()
+        print("Sensor error!")
+        break
+        
+    if distance[2] > 20:
+        drive_forward()
+    else:
+        handle_obstacle()
+```
+
+<!-- 
+NOTES:
+- Always have timeouts
+- Always validate sensor data
+- Always have a way to stop
+-->
+
+---
+
 # Resources for Continued Learning
 
 **Books:**
@@ -203,6 +292,7 @@ NOTES:
 - ROS2 tutorials: docs.ros.org
 - Coursera: Robotics Specialization (UPenn)
 - YouTube: Cyrill Stachniss lectures
+- Edge Impulse: edgeimpulse.com (vision ML)
 
 <!-- 
 NOTES:

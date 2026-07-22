@@ -12,22 +12,44 @@ math: mathjax
 
 ---
 
-# Day 1 Recap
+# Day 1 Recap & The Big Picture
 
 Yesterday we covered:
 - Configuration space & obstacle expansion
 - A* path planning algorithm
 - Robot kinematics (differential drive)
 - Motor control & encoders
-- ROS2 introduction
 
-**Today**: Sensors, maze algorithms, and the maze challenge!
+**Key insight from Lab 2**: Your robot drifted. Why?
 
 <!-- 
 NOTES:
-- Quick recap to get everyone on the same page
-- Ask if anyone has questions from yesterday
-- Make sure all robots are working
+- Ask: "How much did your robot drift in the square test?"
+- This motivates today's material
+- MODEL VS REALITY: Perfect plans don't execute perfectly
+-->
+
+---
+
+# Model vs. Reality
+
+**The Problem:**
+- Lab 1: Perfect A* path in a grid world
+- Lab 2: Real robot can't follow it exactly
+
+**Why?**
+- Wheel slip
+- Uneven surfaces
+- Encoder resolution
+- Timing variations
+
+**The Solution**: Sensors close the gap between model and reality
+
+<!-- 
+NOTES:
+- This is a core theme of robotics
+- We plan in ideal models, execute in messy reality
+- Sensors let us detect and correct errors
 -->
 
 ---
@@ -67,6 +89,82 @@ NOTES:
 - Proprioceptive = sensing self
 - Exteroceptive = sensing environment
 - Active sensors have more control but use power
+-->
+
+---
+
+# How Sensors Talk to the Microcontroller
+
+Sensors need to communicate with the main processor. Common protocols:
+
+| Protocol | Wires | Speed | Typical Use |
+|----------|-------|-------|-------------|
+| **I2C** | 2 (SDA, SCL) | ~400 kbit/s | Sensors, displays |
+| **SPI** | 4 (MOSI, MISO, CLK, CS) | ~10 Mbit/s | Fast sensors, SD cards |
+| **UART** | 2 (TX, RX) | ~115 kbit/s | GPS, serial devices |
+| **Analog** | 1 | Varies | Simple sensors |
+
+<!-- 
+NOTES:
+- Understanding protocols helps debugging
+- I2C is most common for robotics sensors
+- Alvik's ToF and IMU both use I2C
+-->
+
+---
+
+# I2C (Inter-Integrated Circuit)
+
+**Two-wire protocol**: SDA (data) + SCL (clock)
+
+```
+         ┌─────────────────────────────────┐
+         │           I2C Bus               │
+         └───┬─────────┬─────────┬─────────┘
+             │         │         │
+          ┌──┴──┐   ┌──┴──┐   ┌──┴──┐
+          │ ToF │   │ IMU │   │ etc │
+          │ 0x29│   │ 0x6A│   │     │
+          └─────┘   └─────┘   └─────┘
+```
+
+- Each device has a unique **address** (e.g., 0x29)
+- Master (Alvik CPU) initiates communication
+- Multiple devices share the same two wires
+
+<!-- 
+NOTES:
+- I2C = "I-squared-C" or "I-two-C"
+- Address conflicts can be a problem
+- Pull-up resistors needed on bus
+-->
+
+---
+
+# I2C in Practice
+
+```python
+# What happens when you call alvik.get_distance():
+
+# 1. CPU sends START condition
+# 2. CPU sends device address (0x29) + READ bit
+# 3. Sensor responds with data bytes
+# 4. CPU sends STOP condition
+
+# The Alvik library handles this for you!
+left, cl, center, cr, right = alvik.get_distance()
+```
+
+Understanding this helps when:
+- Sensors stop responding (wiring issue?)
+- Multiple sensors conflict (same address?)
+- Debugging timing problems
+
+<!-- 
+NOTES:
+- You don't write I2C code directly on Alvik
+- But understanding it helps debugging
+- Real robotics often involves raw I2C/SPI work
 -->
 
 ---

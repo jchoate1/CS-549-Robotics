@@ -33,6 +33,29 @@ NOTES:
 
 ---
 
+# Representation Choices
+
+Different representations for different problems:
+
+| Representation | Good For | Cost |
+|----------------|----------|------|
+| **Grid** | Global planning, complete | Memory, coarse |
+| **Waypoints** | Compact storage, execution | Loses detail |
+| **Splines** | Smooth curves, trajectories | Computation |
+| **Reactive rules** | Fast response, simple | No global view |
+
+**Key insight**: Each is a tool with tradeoffs.
+We use grids for planning, then convert to waypoints for execution.
+
+<!-- 
+NOTES:
+- This framing helps students see the big picture
+- Labs 1-5 use different representations
+- Real robots combine multiple representations
+-->
+
+---
+
 # Graph Search Basics
 
 Think of the grid as a graph:
@@ -357,6 +380,32 @@ NOTES:
 - A* is the workhorse of robotics path planning
 - Wavefront useful in specific cases
 - Both are complete and optimal
+-->
+
+---
+
+# Beyond A*: Incremental Replanning
+
+What if the world changes while you're navigating?
+
+**LPA*** (Lifelong Planning A*):
+- Reuses previous search when map changes
+- Only updates affected areas
+
+**D* Lite**:
+- Plans from goal to robot (like wavefront)
+- Efficiently repairs path as obstacles appear
+
+Real robots discover new obstacles → need to replan fast!
+
+*Beyond our scope, but know these exist.*
+
+<!-- 
+NOTES:
+- A* replans from scratch each time
+- LPA* and D* Lite are smarter about reuse
+- Mars rovers use D* variants
+- Mention for completeness, don't implement
 -->
 
 ---

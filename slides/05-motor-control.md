@@ -19,13 +19,45 @@ We have a path from A*: [(0,0), (0,1), (0,2), (1,2), ...]
 Now we need to:
 1. Convert path to motor commands
 2. Execute commands accurately
-3. Handle real-world imperfections
+3. **Handle real-world imperfections**
+
+This is where **model meets reality**.
 
 <!-- 
 NOTES:
-- Path planning was theoretical
-- Now we interface with physical hardware
-- This is where theory meets reality
+- Path planning was theoretical (model)
+- Now we interface with physical hardware (reality)
+- The gap between them is THE problem of robotics
+-->
+
+---
+
+# The Central Idea: Feedback Control
+
+**Robotics is largely about sensing errors and correcting them.**
+
+```
+                    ┌────────────────────┐
+     Desired ──────▶│   Compare & Fix    │──────▶ Actual
+     State         │  (Error→Correction) │       Outcome
+                    └─────────┬──────────┘
+                              │
+                              │ Measure
+                              ▼
+                         [  Sensor  ]
+```
+
+This pattern appears *everywhere*:
+- Motor speed control (encoders)
+- Heading control (IMU/gyro)
+- Position control (GPS/landmarks)
+- Even A* replanning is "feedback" at a higher level
+
+<!-- 
+NOTES:
+- This is the CORE IDEA of the entire course
+- Sense → Compare → Correct → Repeat
+- Without feedback, robots fail
 -->
 
 ---
@@ -313,12 +345,12 @@ NOTES:
 
 ---
 
-# Lab 2: Drive Square
+# Lab 2: Drive Square & UMich Benchmark
 
 Your task:
 1. Drive the robot in a 30cm × 30cm square
 2. Return to the starting position
-3. Measure the error
+3. **Measure and interpret the error**
 
 ```python
 for i in range(4):
@@ -326,11 +358,34 @@ for i in range(4):
     alvik.rotate(90, 'deg')
 ```
 
+Run **both clockwise AND counter-clockwise!**
+
 <!-- 
 NOTES:
 - Seems simple, but reveals odometry errors
-- Mark starting position with tape
-- Measure final position with ruler
+- CW vs CCW comparison reveals SYSTEMATIC vs RANDOM errors
+- This is a standard industry test
+-->
+
+---
+
+# Interpreting Your Results
+
+| What You Measure | What It Means | Action |
+|------------------|---------------|--------|
+| CW and CCW drift **same direction** | Systematic error (wheel size, alignment) | Can calibrate out |
+| CW and CCW drift **opposite directions** | Random error (slip, surface) | Need sensors |
+| Error grows with distance | Odometry drift (expected) | Use landmarks |
+| Large heading error | Gyro drift or wheel slip | Check turns |
+
+**The numbers tell you what's wrong and how to fix it.**
+
+<!-- 
+NOTES:
+- Don't just run the test - INTERPRET it
+- Systematic errors are correctable
+- Random errors need sensor feedback
+- This is real engineering analysis
 -->
 
 ---

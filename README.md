@@ -20,6 +20,8 @@ CS-549-Robotics/
 │   ├── Lab3/                 # Range sensor interfacing (Alvik)
 │   ├── Lab4/                 # Wall-following behavior (Alvik)
 │   └── Lab5/                 # Final maze navigation (Alvik)
+├── slides/                   # Lecture slides (Marp markdown format)
+│   └── images/               # Images used in slides
 ├── ros2_simulation/          # Gazebo maze worlds and Nav2 config
 └── docs/                     # Additional documentation
 ```
@@ -127,6 +129,36 @@ alvik.stop()
 | 4 | Wall Following | Reactive behaviors, state machines |
 | 5 | Maze Challenge | Integration of all skills |
 
+## Lecture Slides
+
+Slides are written in Markdown using [Marp](https://marp.app/) format and located in the `slides/` directory.
+
+| Slide Deck | Topic |
+|------------|-------|
+| `01-course-overview.md` | Course overview, robotics landscape |
+| `02-configuration-space.md` | Configuration space, obstacles |
+| `03-path-planning.md` | BFS, Dijkstra, A*, wavefront |
+| `04-robot-kinematics.md` | Differential drive, odometry |
+| `05-motor-control.md` | Motors, encoders, PID, feedback control |
+| `06-intro-ros2.md` | ROS2 introduction |
+| `07-sensors-overview.md` | Sensors, I2C/SPI protocols |
+| `07b-realtime-concepts.md` | Timers, asyncio, interrupts |
+| `08-maze-algorithms.md` | Wall follower, Pledge, flood fill |
+| `09-ros2-nav2.md` | Nav2, costmaps, SLAM |
+| `10-trajectories.md` | Splines, smooth motion |
+| `11-advanced-topics.md` | Vision/ML, safety, next steps |
+
+**Presenting slides:**
+- Install the [Marp for VS Code](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode) extension
+- Open any `.md` slide file and click the Marp preview icon
+- Or use Marp CLI: `marp --preview slides/01-course-overview.md`
+
+**Exporting to PDF/PowerPoint:**
+```bash
+marp slides/01-course-overview.md -o slides/01-course-overview.pdf
+marp slides/01-course-overview.md -o slides/01-course-overview.pptx
+```
+
 ## Useful Links
 
 - [Arduino Alvik Documentation](https://docs.arduino.cc/hardware/alvik/)
@@ -134,6 +166,7 @@ alvik.stop()
 - [Alvik MicroPython Library](https://github.com/arduino/arduino-alvik-mpy)
 - [ROS2 Humble Documentation](https://docs.ros.org/en/humble/)
 - [Nav2 Documentation](https://navigation.ros.org/)
+- [Marp (Markdown Presentations)](https://marp.app/)
 
 ## License
 

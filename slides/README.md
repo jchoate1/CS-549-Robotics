@@ -46,11 +46,12 @@ marp slides/01-course-overview.md --preview
 ### Day 2: Sensing & Navigation
 | File | Topic | Duration |
 |------|-------|----------|
-| `07-sensors-overview.md` | Sensor types, range sensing | 75 min |
+| `07-sensors-overview.md` | Sensor types, I2C/SPI, range sensing | 60 min |
+| `07b-realtime-concepts.md` | Timers, asyncio, interrupts, safety | 30 min |
 | `08-maze-algorithms.md` | Wall follower, Pledge, flood fill | 45 min |
-| `09-ros2-nav2.md` | Nav2, costmaps, SLAM concepts | 45 min |
-| `10-trajectories.md` | Splines, smooth motion | 45 min |
-| `11-advanced-topics.md` | SLAM, localization, where to go next | 30 min |
+| `09-ros2-nav2.md` | Nav2, costmaps, SLAM concepts | 30 min |
+| `10-trajectories.md` | Splines, smooth motion | 30 min |
+| `11-advanced-topics.md` | Vision/ML exposure, safety, wrap-up | 30 min |
 
 ## Speaker Notes
 
